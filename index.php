@@ -20,16 +20,21 @@
             <th>No.</th>
             <th>Nama</th>
             <th>Alamat</th>
+            <th>Aksi</th>
          </tr>
       </thead>
       <tbody id="biodata"></tbody>
    </table>
+   <a href="#" class="tes" data-id="1">Tes</a>
+   <a href="#" class="tes" data-id="2">Tes</a>
+   <a href="#" class="tes" data-id="3">Tes</a>
 
    <script>
       window.onload = tampilBiodata();
+      // ketika tombol hapus diklik
+      document.querySelector('#biodata').addEventListener('click', hapusData);
       // ketika tombol tambah data diklik
       document.getElementById('btn-tambah-data').addEventListener('click', tambahData);
-
       //menampilkan data kedalam tabel
       function tampilBiodata() {
          let xhr = new XMLHttpRequest;
@@ -47,6 +52,7 @@
                      '<td>' + nomor + '</td>' +
                      '<td>' + biodata[index]['nama'] + '</td>' +
                      '<td>' + biodata[index]['alamat'] + '</td>' +
+                     '<td><a href="#" class="hapus" data-id="' + biodata[index]['id'] + '">Hapus</a></td>' +
                      '</tr>';
                   nomor++;
                }
@@ -80,6 +86,15 @@
             }
          }
          xhr.send(params);
+      }
+
+      // hapus data
+      function hapusData(e) {
+         if (e.target.className == 'hapus') {
+            let id = e.target.getAttribute('data-id');
+            console.log(id);
+
+         }
       }
    </script>
 </body>
