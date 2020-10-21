@@ -25,9 +25,6 @@
       </thead>
       <tbody id="biodata"></tbody>
    </table>
-   <a href="#" class="tes" data-id="1">Tes</a>
-   <a href="#" class="tes" data-id="2">Tes</a>
-   <a href="#" class="tes" data-id="3">Tes</a>
 
    <script>
       window.onload = tampilBiodata();
@@ -52,7 +49,7 @@
                      '<td>' + nomor + '</td>' +
                      '<td>' + biodata[index]['nama'] + '</td>' +
                      '<td>' + biodata[index]['alamat'] + '</td>' +
-                     '<td><a href="#" class="hapus" data-id="' + biodata[index]['id'] + '">Hapus</a></td>' +
+                     '<td><button typen="button" class="hapus" data-id="' + biodata[index]['id'] + '">Hapus</button></td>' +
                      '</tr>';
                   nomor++;
                }
@@ -91,9 +88,23 @@
       // hapus data
       function hapusData(e) {
          if (e.target.className == 'hapus') {
-            let id = e.target.getAttribute('data-id');
-            console.log(id);
-
+            if (confirm('yakin hapus data ?') == true) {
+               let id = e.target.getAttribute('data-id');
+               let xhr = new XMLHttpRequest;
+               xhr.open('GET', 'hapus_data.php?id=' + id);
+               xhr.onload = function() {
+                  if (xhr.readyState == 4 && xhr.status == 200) {
+                     let pesan = xhr.responseText;
+                     if (pesan == 'berhasil') {
+                        tampilBiodata();
+                        alert('Data berhasil dihapus !');
+                     }else{
+                        alert('Data gagal dihapus !');
+                     }
+                  }
+               }
+               xhr.send();
+            }
          }
       }
    </script>
