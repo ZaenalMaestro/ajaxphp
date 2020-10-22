@@ -49,7 +49,7 @@
                      '<td>' + nomor + '</td>' +
                      '<td>' + biodata[index]['nama'] + '</td>' +
                      '<td>' + biodata[index]['alamat'] + '</td>' +
-                     '<td><button typen="button" class="hapus" data-id="' + biodata[index]['id'] + '">Hapus Hapus</button></td>' +
+                     '<td><button typen="button" class="hapus" data-id="' + biodata[index]['id'] + '">Hapus</button></td>' +
                      '</tr>';
                   nomor++;
                }
