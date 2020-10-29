@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-
+   <link rel="stylesheet" href="style.css">
    <title>Biodata</title>
 </head>
 
@@ -26,10 +26,48 @@
       <tbody id="biodata"></tbody>
    </table>
 
+   <!-- popup -->
+   <div class="popup">
+      <!-- bayangan -->
+      <div class="bayangan"></div>
+      <!-- end bayangan-->
+      <div class="konten-popup">
+         <!-- tombol close -->
+         <div class="tombol-close">&times;</div>
+         <!-- end tombol close -->
+
+         <!-- form -->
+         <form method="post">
+            <!-- bagian input nama -->
+            <label for="nama">Nama</label>
+            <input type="text" id="nama">
+            <!-- end bagian input nama -->
+
+            <!-- input alamat -->
+            <label for="alamat">Alamat</label>
+            <input type="text" id="alamat">
+            <!-- end input alamat -->
+
+            <!-- tombol edit data -->
+            <button type="button">Edit Data</button>
+            <!-- end tombol edit data -->
+         </form>
+         <!-- end form -->
+      </div>
+   </div>
+   <!-- end popup -->
+
    <script>
       window.onload = tampilBiodata();
-      // ketika tombol hapus diklik
-      document.querySelector('#biodata').addEventListener('click', hapusData);
+      // ketika tombol hapus atau edit diklik
+      document.querySelector('#biodata').addEventListener('click', function(e) {
+         if (e.target.className == 'hapus') {
+            hapusData(e.target.getAttribute('data-id'));
+         } else if (e.target.className == 'edit') {
+            e.classList.toggle('active');
+         }
+
+      });
       // ketika tombol tambah data diklik
       document.getElementById('btn-tambah-data').addEventListener('click', tambahData);
       //menampilkan data kedalam tabel
@@ -49,7 +87,8 @@
                      '<td>' + nomor + '</td>' +
                      '<td>' + biodata[index]['nama'] + '</td>' +
                      '<td>' + biodata[index]['alamat'] + '</td>' +
-                     '<td><button typen="button" class="hapus" data-id="' + biodata[index]['id'] + '">Hapus</button></td>' +
+                     '<td><button typen="button" class="hapus" data-id="' + biodata[index]['id'] + '">Hapus</button>' +
+                     '<button typen="button" class="edit" data-id="' + biodata[index]['id'] + '">Edit</button></td<button>' +
                      '</tr>';
                   nomor++;
                }
@@ -86,25 +125,22 @@
       }
 
       // hapus data
-      function hapusData(e) {
-         if (e.target.className == 'hapus') {
-            if (confirm('yakin hapus data ?') == true) {
-               let id = e.target.getAttribute('data-id');
-               let xhr = new XMLHttpRequest;
-               xhr.open('GET', 'hapus_data.php?id=' + id);
-               xhr.onload = function() {
-                  if (xhr.readyState == 4 && xhr.status == 200) {
-                     let pesan = xhr.responseText;
-                     if (pesan == 'berhasil') {
-                        tampilBiodata();
-                        alert('Data berhasil dihapus !');
-                     }else{
-                        alert('Data gagal dihapus !');
-                     }
+      function hapusData(id) {
+         if (confirm('yakin hapus data ?') == true) {
+            let xhr = new XMLHttpRequest;
+            xhr.open('GET', 'hapus_data.php?id=' + id);
+            xhr.onload = function() {
+               if (xhr.readyState == 4 && xhr.status == 200) {
+                  let pesan = xhr.responseText;
+                  if (pesan == 'berhasil') {
+                     tampilBiodata();
+                     alert('Data berhasil dihapus !');
+                  } else {
+                     alert('Data gagal dihapus !');
                   }
                }
-               xhr.send();
             }
+            xhr.send();
          }
       }
    </script>
