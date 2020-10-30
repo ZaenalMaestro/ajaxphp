@@ -32,6 +32,7 @@
 }
 
 .popup .konten-popup .tombol-close{
+   cursor: pointer;
    background: red;
    width: 20px;
    text-align: center;
