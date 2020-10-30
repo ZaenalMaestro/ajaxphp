@@ -3,16 +3,17 @@ window.onload = tampilBiodata();
 document.querySelector('#biodata').addEventListener('click', function (e) {
    if (e.target.className == 'hapus') {
       hapusData(e.target.getAttribute('data-id'));
-   } else if (e.target.className == 'edit') {
+   } else if (e.target.className == 'edit') {      
       document.querySelector('.popup').classList.toggle('active');
-      getDataBerdasarkanId(e.target.getAttribute('data-id'));
+      getDataBerdasarkanId(e.target.getAttribute('data-id'));      
    }
 });
 
 // ketika tombol close popup diklik
 document.querySelector('.tombol-close').addEventListener('click', function () {
-   document.querySelector('.popup').classList.toggle('active');
+   document.querySelector('.popup').classList.toggle('active');   
 });
+
 // ketika tombol tambah data diklik
 document.getElementById('btn-tambah-data').addEventListener('click', tambahData);
 
@@ -20,11 +21,11 @@ document.getElementById('btn-tambah-data').addEventListener('click', tambahData)
 document.querySelector('.edit-data').addEventListener('click', editData);
 
 // fungsi Edit Data
-function editData(){
+function editData() {
    let id = document.getElementById('id');
    let nama = document.getElementById('edit-nama');
    let alamat = document.getElementById('edit-alamat');
-   let params = "id="+id.value+"&nama="+nama.value+"&alamat="+alamat.value;
+   let params = "id=" + id.value + "&nama=" + nama.value + "&alamat=" + alamat.value;
 
    let xhr = new XMLHttpRequest;
    xhr.open('POST', 'edit_data.php');
@@ -32,7 +33,7 @@ function editData(){
    xhr.onload = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
          let pesan = xhr.responseText;
-         if (pesan == 'berhasil') {
+         if (pesan == 'berhasil') {            
             alert('Data Berhasil DiUbah !');
             tampilBiodata();
          } else {
@@ -41,19 +42,19 @@ function editData(){
       }
    }
    xhr.send(params);
-   
+
 }
 
 // mengambil data berdasarkan id dan tampilkan kedalam popup
 function getDataBerdasarkanId(id) {
    const xhr = new XMLHttpRequest;
    xhr.open('GET', 'get_data_by_id.php?id=' + id);
-   xhr.onload = function(){
+   xhr.onload = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
          let data = JSON.parse(xhr.responseText);
-         document.getElementById('id').setAttribute('value', data.id);  
-         document.getElementById('edit-nama').setAttribute('value', data.nama);  
-         document.getElementById('edit-alamat').setAttribute('value', data.alamat);                         
+         document.getElementById('id').value = data.id;
+         document.getElementById('edit-nama').value = data.nama;
+         document.getElementById('edit-alamat').value = data.alamat;
       }
    }
    xhr.send();
