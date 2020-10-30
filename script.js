@@ -37,12 +37,11 @@ function editData() {
             alert('Data Berhasil DiUbah !');
             tampilBiodata();
          } else {
-            alert('Data Gagal Diubah !');
+            alert('Data Tidak Diubah !');
          }
       }
    }
    xhr.send(params);
-
 }
 
 // mengambil data berdasarkan id dan tampilkan kedalam popup
