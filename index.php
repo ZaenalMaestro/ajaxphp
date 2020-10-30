@@ -64,9 +64,14 @@
          if (e.target.className == 'hapus') {
             hapusData(e.target.getAttribute('data-id'));
          } else if (e.target.className == 'edit') {
-            e.classList.toggle('active');
+            document.querySelector('.popup').classList.toggle('active');
          }
 
+      });
+
+      // ketika tombol close popup diklik
+      document.querySelector('.tombol-close').addEventListener('click', function() {
+         document.querySelector('.popup').classList.toggle('active');
       });
       // ketika tombol tambah data diklik
       document.getElementById('btn-tambah-data').addEventListener('click', tambahData);
