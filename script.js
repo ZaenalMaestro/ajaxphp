@@ -3,15 +3,15 @@ window.onload = tampilBiodata();
 document.querySelector('#biodata').addEventListener('click', function (e) {
    if (e.target.className == 'hapus') {
       hapusData(e.target.getAttribute('data-id'));
-   } else if (e.target.className == 'edit') {      
+   } else if (e.target.className == 'edit') {
       document.querySelector('.popup').classList.toggle('active');
-      getDataBerdasarkanId(e.target.getAttribute('data-id'));      
+      getDataBerdasarkanId(e.target.getAttribute('data-id'));
    }
 });
 
 // ketika tombol close popup diklik
 document.querySelector('.tombol-close').addEventListener('click', function () {
-   document.querySelector('.popup').classList.toggle('active');   
+   document.querySelector('.popup').classList.toggle('active');
 });
 
 // ketika tombol tambah data diklik
@@ -33,7 +33,7 @@ function editData() {
    xhr.onload = function () {
       if (xhr.readyState == 4 && xhr.status == 200) {
          let pesan = xhr.responseText;
-         if (pesan == 'berhasil') {            
+         if (pesan == 'berhasil') {
             alert('Data Berhasil DiUbah !');
             tampilBiodata();
          } else {
@@ -131,3 +131,33 @@ function hapusData(id) {
       xhr.send();
    }
 }
+
+// fitur pencarian
+document.getElementById('keyword').addEventListener('keyup', function () {
+   let keyword = this.value;
+   
+   let xhr = new XMLHttpRequest;
+   xhr.open('GET', 'pencarian.php?keyword='+keyword);
+   xhr.onload = function () {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+         let biodata = JSON.parse(xhr.responseText);
+         console.log(biodata);
+
+         let tabel = '';
+         let nomor = 1;
+
+         for (index in biodata) {
+            tabel += '<tr>' +
+               '<td>' + nomor + '</td>' +
+               '<td>' + biodata[index]['nama'] + '</td>' +
+               '<td>' + biodata[index]['alamat'] + '</td>' +
+               '<td><button typen="button" class="hapus" data-id="' + biodata[index]['id'] + '">Hapus</button>' +
+               '<button typen="button" class="edit" data-id="' + biodata[index]['id'] + '">Edit</button></td<button>' +
+               '</tr>';
+            nomor++;
+         }
+         document.getElementById('biodata').innerHTML = tabel;        
+      }
+   }
+   xhr.send();
+})

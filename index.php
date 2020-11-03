@@ -14,6 +14,11 @@
       <input type="text" name="alamat" id="alamat" placeholder="masukkan alamat..."><br>
       <button type="button" id="btn-tambah-data">Tambah Data</button>
    </form>
+
+   <!-- Fitur pencarian -->
+   <br><label for="keyword"><b>Masukkan pencarian</b></label><br>
+   <input type="text" id="keyword">
+
    <table border="1" cellspacing="0" cellpadding="10">
       <thead>
          <tr>
